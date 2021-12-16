@@ -1,22 +1,17 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
-import InfoBlock from '@/v2/components/InfoBlock/InfoBlock';
 import Slider from '@/v2/components/Slider/Slider';
 import getArrayByIds from '@/v1/utils/getArrayByIds';
 import SectorContext from '@/v1/contexts/SectorContext';
 import SpotContext from '@/v1/contexts/SpotContext';
 import { StyleSheet, css } from '../../aphrodite';
 
-class Header extends Component {
+class Header extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      bgImageLoaded: false,
-    };
-    this.photosInternal = {};
   }
 
   onSliderClick = (sectorId, currentSectors) => {
@@ -29,27 +24,10 @@ class Header extends Component {
     }
   };
 
-  // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps(newProps) {
-    if (!newProps.data.photo) {
-      return;
-    }
-    if (this.photosInternal[newProps.data.photo.url] !== undefined) {
-      return;
-    }
-    this.setState({ bgImageLoaded: false });
-    this.photosInternal[newProps.data.photo.url] = new Image();
-    this.photosInternal[newProps.data.photo.url].onload = () => (
-      this.setState({ bgImageLoaded: true })
-    );
-    this.photosInternal[newProps.data.photo.url].src = newProps.data.photo.url;
-  }
-
   render() {
     const {
       data, spots, sectors,
     } = this.props;
-    const { bgImageLoaded } = this.state;
     return (
       <SpotContext.Consumer>
         {
@@ -60,25 +38,12 @@ class Header extends Component {
               <SectorContext.Consumer>
                 {
                   ({ sector }) => (
-                    <header className={css(styles.headerM)}>
-                      <div
-                        className={css(styles.headerMItemsContainer)}
-                        style={
-                          (data.photo && bgImageLoaded)
-                            ? { backgroundImage: `url(${this.photosInternal[data.photo.url].src})` }
-                            : {}
-                        }
-                      >
-                        <h1 className={css(styles.headerMHeader)}>{data.name}</h1>
-                        <p className={css(styles.headerMDescr)}>{data.description}</p>
-                        <InfoBlock infoData={data.infoData} />
-                      </div>
-                      <Slider
-                        onClick={() => this.onSliderClick(
-                          sector ? sector.id : 0, currentSectors,
-                        )}
-                      />
-                    </header>
+                    <Slider
+                      text={data.name}
+                      onClick={() => this.onSliderClick(
+                        sector ? sector.id : 0, currentSectors,
+                      )}
+                    />
                   )
                 }
               </SectorContext.Consumer>

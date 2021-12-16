@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, css } from '@/v2/aphrodite';
 
-const Slider = ({ onClick }) => (
+const Slider = ({ text, onClick }) => (
   <button type="button" className={css(styles.headerMItemsContainerButton)} onClick={onClick}>
     <span className={css(styles.headerMInfoIcon)}>
+      {text}
       <svg aria-hidden="true">
         <use xlinkHref={`${require('./images/arrow.svg')}#arrow`} />
       </svg>
@@ -38,6 +39,7 @@ const styles = StyleSheet.create({
 });
 
 Slider.propTypes = {
+  text: PropTypes.string,
   onClick: PropTypes.func.isRequired,
 };
 
