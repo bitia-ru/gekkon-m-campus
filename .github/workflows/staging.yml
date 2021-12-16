@@ -29,13 +29,14 @@ jobs:
       - name: Deploy
         run: |
           cat << EOF >deploy_script.DeployForStaging.sh
-            cd services/gekkon-staging/frontend_mobile && \
+            cd services/gekkon-staging/campus_mobile && \
               git fetch && \
               git reset --hard HEAD && \
               git checkout release/current && \
               git reset --hard origin/release/current && \
+              git submodule update --init && \
               cd .. && \
-              docker-compose build frontend_mobile && \
+              docker-compose build campus_mobile && \
               docker-compose up -d
           EOF
           ssh deploy "$(cat deploy_script.DeployForStaging.sh)"
