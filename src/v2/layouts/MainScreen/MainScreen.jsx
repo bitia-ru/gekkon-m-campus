@@ -1,6 +1,5 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import Footer from '../../components/Footer/Footer';
 import { css, StyleSheet } from '../../aphrodite';
 import withModals, { ModalContainerContext } from '../../modules/modalable';
 import MainScreenContext from '@/v2/contexts/MainScreenContext';
@@ -95,9 +94,6 @@ class MainScreen extends React.PureComponent {
                     {children && children}
                   </MainScreenContext.Provider>
                 </LoadingIndicator>
-              </div>
-              <div style={{ flex: 0 }}>
-                <Footer />
               </div>
             </div>
           )
