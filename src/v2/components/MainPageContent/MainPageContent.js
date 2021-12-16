@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as R from 'ramda';
 import SpotCard from '@/v1/components/SpotCard/SpotCard';
-import NewsBlock from '@/v1/components/NewsBlock/NewsBlock';
 import { css, StyleSheet } from '@/v2/aphrodite';
 import { loadSpots } from '@/v2/redux/spots/actions';
 
@@ -39,7 +38,6 @@ const MainPageContent = () => {
 
   return (
     <>
-      <NewsBlock />
       <div className={css(style.spotsSection)}>
         <div className={css(style.spotsContainer)}>
           <h1 className={css(style.spotsHeader)}>Скалодромы</h1>
