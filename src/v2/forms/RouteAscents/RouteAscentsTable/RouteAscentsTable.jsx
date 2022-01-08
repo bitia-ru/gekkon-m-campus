@@ -13,7 +13,7 @@ class RouteAscentsTable extends React.PureComponent {
   }
 
   ascentsForLayout = () => {
-    const { ascents, mergeLastRow } = this.props;
+    const { ascents, mergeLystRow } = this.props;
     const res = [];
     R.forEach(
       (ascent) => {

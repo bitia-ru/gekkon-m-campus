@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import SocialLinkButton from '@/v1/components/SocialLinkButton/SocialLinkButton';
 import UserIcon from '@/v2/components/UserIcon/UserIcon';
-import MenuList from '@/v2/components/MenuList/MenuList';
-import { USER_ITEMS_DATA, GUEST_ITEMS_DATA } from '@/v1/Constants/User';
+import MenuList from './MenuList/MenuList';
+import { default as MainMenuItems } from './items';
 import { currentUser } from '@/v2/redux/user_session/utils';
 import { closeUserSession } from '@/v2/utils/auth';
 import { enterWithVk } from '../../utils/vk';
@@ -89,11 +89,7 @@ class MainMenu extends React.PureComponent {
               </Link>
             </li>
           </ul>
-          <MenuList
-            items={!user ? GUEST_ITEMS_DATA : USER_ITEMS_DATA}
-            onClick={this.onItemSelect}
-            textFieldName="title"
-          />
+          <MenuList items={MainMenuItems} />
           <div className={css(styles.mMenuList)}>
             <h3 className={css(styles.mMenuHeader)}>
               Соцсети

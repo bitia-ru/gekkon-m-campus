@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { css, StyleSheet } from '../../aphrodite';
 import withModals, { ModalContainerContext } from '../../modules/modalable';
 import MainScreenContext from '@/v2/contexts/MainScreenContext';
@@ -49,7 +50,7 @@ class MainScreen extends React.PureComponent {
   }
 
   render() {
-    const { children, header } = this.props;
+    const { children, header, backgroundColor } = this.props;
     const { showMenu } = this.state;
 
     return (
@@ -61,14 +62,13 @@ class MainScreen extends React.PureComponent {
                 style.container,
                 isModalShown ? style.unscrollable : style.scrollable,
               )}
+              style={{ backgroundColor }}
               ref={(ref) => { this.containerRef = ref; }}
             >
               <div style={{ flex: 1 }}>
                 <LoadingIndicator>
                   <Logo />
-                  <MainNav
-                    showMenu={() => this.setState({ showMenu: true })}
-                  />
+                  <MainNav showMenu={() => this.setState({ showMenu: true })} />
                   {
                     header && (
                       typeof header === 'string' || typeof header === 'number'
@@ -113,5 +113,13 @@ const style = StyleSheet.create({
   scrollable: { overflowY: 'auto' },
   unscrollable: { overflowY: 'hidden' },
 });
+
+MainScreen.propTypes = {
+  header: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  backgroundColor: PropTypes.string,
+};
 
 export default withRouter(withModals(MainScreen));
