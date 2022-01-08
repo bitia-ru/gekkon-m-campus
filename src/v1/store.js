@@ -1,5 +1,4 @@
 import { createStore, applyMiddleware } from 'redux';
-import * as R from 'ramda';
 import thunk from 'redux-thunk';
 import localForage from 'localforage';
 import rootReducer from './reducers';

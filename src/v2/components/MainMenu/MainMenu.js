@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import SocialLinkButton from '@/v1/components/SocialLinkButton/SocialLinkButton';
 import UserIcon from '@/v2/components/UserIcon/UserIcon';
-import MenuList from '@/v2/components/MenuList/MenuList';
-import { USER_ITEMS_DATA, GUEST_ITEMS_DATA } from '@/v1/Constants/User';
+import MenuList from './MenuList/MenuList';
+import { default as MainMenuItems } from './items';
 import { currentUser } from '@/v2/redux/user_session/utils';
 import { closeUserSession } from '@/v2/utils/auth';
 import { enterWithVk } from '../../utils/vk';
@@ -55,13 +55,18 @@ class MainMenu extends React.PureComponent {
 
   render() {
     const { user, hideMenu } = this.props;
+    const { currentUser: currentUserFromContext } = this.props;
+
+    const currentUser = currentUserFromContext ? currentUserFromContext : user;
+
     const socialLinks = require(
       '../../../../img/social-links-sprite/social-links-sprite.svg',
     );
+
     return (
       <div className={css(styles.mMenu)}>
         <div>
-          <UserIcon user={user} hideMenu={hideMenu} />
+          <UserIcon user={currentUser} hideMenu={hideMenu} />
           <ul className={css(styles.mMenuList)}>
             { false
             && <li className={css(styles.mMenuListItem)}>
@@ -89,11 +94,7 @@ class MainMenu extends React.PureComponent {
               </Link>
             </li>
           </ul>
-          <MenuList
-            items={!user ? GUEST_ITEMS_DATA : USER_ITEMS_DATA}
-            onClick={this.onItemSelect}
-            textFieldName="title"
-          />
+          <MenuList items={MainMenuItems} />
           <div className={css(styles.mMenuList)}>
             <h3 className={css(styles.mMenuHeader)}>
               Соцсети
@@ -194,9 +195,11 @@ const styles = StyleSheet.create({
 });
 
 MainMenu.propTypes = {
-  user: PropTypes.object,
+  currentUser: PropTypes.object,
   hideMenu: PropTypes.func.isRequired,
   history: PropTypes.object,
+
+  user: PropTypes.object,
 };
 
 const mapStateToProps = state => ({

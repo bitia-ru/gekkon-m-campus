@@ -10,7 +10,7 @@ export const acts = {
   LOAD_USERS: 'LOAD_USERS_V2',
 };
 
-export const loadSpecificUser = userId => (
+export const loadSpecificUser = (userId, after = null) => (
   (dispatch) => {
     dispatch({
       type: acts.LOAD_SPECIFIC_USER_REQUEST,
@@ -25,6 +25,7 @@ export const loadSpecificUser = userId => (
             type: acts.LOAD_USERS_SUCCESS,
             user: payload,
           });
+          if (typeof after === 'function') after(payload);
         },
         failed(error) {
           dispatch({

@@ -2,6 +2,13 @@ import bcrypt from 'bcryptjs';
 import * as R from 'ramda';
 import Api from '@/v2/utils/Api';
 import toastHttpError from '@/v2/utils/toastHttpError';
+import {
+  loadUsersFailed,
+  loadUsersRequest,
+  loadUserSuccess, logOutUserSuccess
+} from '../../v1/stores/users/actions';
+import Axios from 'axios';
+import { ApiUrl } from '../../v1/Environ';
 
 export const createUserSession = (
   loginCredential, // TODO: check structure: should be {login:...} or {email:...}
