@@ -1,4 +1,4 @@
-FROM node:11-alpine AS builder
+FROM node:16.13.2-alpine3.15 AS builder
 
 RUN npm config set unsafe-perm true
 
@@ -6,7 +6,6 @@ COPY . /app
 WORKDIR /app
 
 RUN npm i --production
-RUN npm i favicons-webpack-plugin@1.0.2
 
 ARG apiUrl
 ARG clientId
@@ -21,7 +20,7 @@ FROM nginx:1.15-alpine AS runner
 
 WORKDIR /app
 
-COPY --from=builder /app/dist /app
+COPY --from=builder /app/public /app
 
 COPY docker/configs/nginx.conf /etc/nginx/nginx.conf
 

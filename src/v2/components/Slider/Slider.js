@@ -7,7 +7,7 @@ const Slider = ({ text, onClick }) => (
     <span className={css(styles.headerMInfoIcon)}>
       {text}
       <svg aria-hidden="true">
-        <use xlinkHref={`${require('./images/arrow.svg')}#arrow`} />
+        <use xlinkHref={`${require('./images/arrow.svg').default}#arrow`} />
       </svg>
     </span>
   </button>
